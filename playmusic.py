@@ -22,7 +22,7 @@ try:
     pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
     pygame.event.set_allowed(pygame.constants.USEREVENT)
     pygame.mixer.music.play()
-    #pygame.event.wait()
+    pygame.event.wait()
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
