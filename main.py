@@ -9,14 +9,14 @@ import random
 
 pygame.init()
 
-FPS = 30 
+FPS =  60
 
 fpsClock = pygame.time.Clock()
 canvas = GameCanvas()
 gameengine = GameEngine()
 
 #walk the ship across the board
-gameengine.deltaVShip('Player', 1, 30)
+#gameengine.deltaVShip('Player', 1, 45)
 
 while True:
     canvas.renderBoard(gameengine)
@@ -26,12 +26,20 @@ while True:
     #move the ship about at rangom
     #gameengine.moveShip('Player',random.randint(0,7),random.randint(0,7))
     
-    gameengine.updateShip('Player')
+    gameengine.updateShip('Player', canvas.SCREENX, canvas.SCREENY)
 
     for event in pygame.event.get():
             if (event.type == KEYDOWN):
                 pressed = pygame.key.name(event.key)
-                print 'pressed ' + pressed
+                if pressed == 'left':
+                    gameengine.changeHeading('Player1',-5)
+                elif pressed == 'right':
+                    gameengine.changeHeading('Player1',5)
+                elif pressed == 'up':
+                    gameengine.changeSpeed('Player1',5)
+                elif pressed == 'down':
+                    gameengine.changeSpeed('Player1',-5)
+
             elif event.type == QUIT:
                 pygame.quit()
                 sys.exit()

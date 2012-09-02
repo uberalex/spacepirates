@@ -14,7 +14,9 @@ class GameCanvas:
         self.GRAY = (134,134,134)
 
         #screen geometry
-        self.DISPLAYSURF = pygame.display.set_mode( (500, 500), 0, 32)
+        self.SCREENX = 1000
+        self.SCREENY = 1000
+        self.DISPLAYSURF = pygame.display.set_mode( (self.SCREENX+10, self.SCREENY+10), 0, 32)
         pygame.display.set_caption('Arr!')
         
         #mouse
@@ -24,26 +26,24 @@ class GameCanvas:
     def renderBoard(self,board):
         self.DISPLAYSURF.fill(self.BLACK)
         #draw the border
-        pygame.draw.line(self.DISPLAYSURF, self.WHITE, (50,50), (50,450), 2)
-        pygame.draw.line(self.DISPLAYSURF, self.WHITE, (50,450), (450,450), 2)
-        pygame.draw.line(self.DISPLAYSURF, self.WHITE, (450,450), (450,50), 2)
-        pygame.draw.line(self.DISPLAYSURF, self.WHITE, (450,50), (50,50), 2)
-        #calculate the board size
-        for line in range(board.BOARDHEIGHT):
-            for col in range(board.BOARDWIDTH):
-                area = Rect(50*(col+1)+15,50*(line+1)+15,20,20)
-                self.DISPLAYSURF.fill(self.GRAY, area)
-    
+        pygame.draw.line(self.DISPLAYSURF, self.WHITE, (0,0), (0,self.SCREENY), 2)
+        pygame.draw.line(self.DISPLAYSURF, self.WHITE, (0,self.SCREENY), (self.SCREENX,self.SCREENY), 2)
+        pygame.draw.line(self.DISPLAYSURF, self.WHITE, (self.SCREENX,self.SCREENY), (self.SCREENX,0), 2)
+        pygame.draw.line(self.DISPLAYSURF, self.WHITE, (self.SCREENX,0), (0,0), 2)
+
+        #draw 10 pixel lines to represent the edges of the squares
+        for y in range(1,board.BOARDHEIGHT):
+            pygame.draw.line(self.DISPLAYSURF, self.GRAY, (0,y*100), (self.SCREENX, y*100), 2)
+
+        for x in range(1,board.BOARDWIDTH):
+            pygame.draw.line(self.DISPLAYSURF, self.GRAY, (x*100, 0), (x*100, self.SCREENY), 2)
+
     def renderPointer(self, coords):
         pygame.draw.line(self.DISPLAYSURF, self.BLUE, (coords[0]-15, coords[1]), (coords[0]+15, coords[1]), 4)
         pygame.draw.line(self.DISPLAYSURF, self.BLUE, (coords[0], coords[1]-15), (coords[0], coords[1]+15), 4)
 
     def renderShip(self,ship):
-        xpos = ship.xpos + 1
-        ypos = ship.ypos + 1
-
-        triangle = [ (25 + (50 * xpos) , 15 + (50 * ypos) ),
-                     (15 + (50 * xpos) , 30 + (50 * ypos) ),
-                     (35 + (50 * xpos) , 30 + (50 * ypos) ) ]
-
-        pygame.draw.polygon(self.DISPLAYSURF, self.RED, triangle, 0)
+        #rects are (x,y,width,height)
+        shipRect = (ship.xpos-25,  ship.ypos-12.5, 50, 25)
+        # jut draw an ellipse for the ship right now
+        pygame.draw.ellipse(self.DISPLAYSURF, self.RED, shipRect, 0)
