@@ -36,7 +36,7 @@ while True:
                 elif pressed == 'right':
                     gameengine.changeHeading('Player1',5)
                 elif pressed == 'up':
-                    gameengine.changeSpeed('Player1',5)
+                    gameengine.changeSpeed('Player1',15)
                 elif pressed == 'down':
                     gameengine.changeSpeed('Player1',-5)
 

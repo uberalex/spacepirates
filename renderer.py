@@ -1,7 +1,15 @@
 import pygame, sys
 
 from pygame.locals import *
-
+from pygame.sprite import Sprite
+class ShipSprite(Sprite):
+    def __init__(self, color, initial_position):
+        #superclass constructor
+        Sprite.__init__(self)
+        
+        #sprite's own canvas
+        self.canvas = pygame.Surface([187,56])
+        self.canvas.fill((128,128,255))
 class GameCanvas:
     """Renders the game window"""   
     

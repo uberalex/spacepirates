@@ -1,9 +1,16 @@
 import pygame, sys, math
 
 from pygame.locals import *
-
-class Ship:
+from pygame.sprite import Sprite
+class Ship(Sprite):
     def __init__(self, name):
+        #superclass constructor
+        Sprite.__init__(self)
+
+        #create the surface for the image
+        self.surface = pygame.Surface([180,57])
+        self.surface.fill((25,25,128))
+
         self.name = name
         self.xpos = 500
         self.ypos = 500
@@ -11,6 +18,7 @@ class Ship:
         self.boardypos = 0
         #represent vector as direction, speed, where direction is angle degrees with up being 0. speed is number of squares per tick
         self.vector = [0,0]
+        self.gravityCoefficient = 0.95
     
     def moveShip(self, newx, newy):
         self.xpos = newx
@@ -31,6 +39,7 @@ class Ship:
     def updatePos(self, width, height):
         self.xpos = (self.xpos + self.vector[0] * math.cos(math.radians(self.vector[1])) ) % width
         self.ypos = (self.ypos + self.vector[0] * math.sin(math.radians(self.vector[1])) ) % height
+        self.vector[0] = self.vector[0] * self.gravityCoefficient
 
 class GameEngine:
     """handles the back-end logic"""
