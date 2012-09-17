@@ -27,6 +27,9 @@ while True:
     #gameengine.moveShip('Player',random.randint(0,7),random.randint(0,7))
     
     gameengine.updateShip('Player', canvas.SCREENX, canvas.SCREENY)
+    
+    #set the key repeat
+    pygame.key.set_repeat(50, 50)
 
     for event in pygame.event.get():
             if (event.type == KEYDOWN):
@@ -39,7 +42,6 @@ while True:
                     gameengine.changeSpeed('Player1',15)
                 elif pressed == 'down':
                     gameengine.changeSpeed('Player1',-5)
-
             elif event.type == QUIT:
                 pygame.quit()
                 sys.exit()

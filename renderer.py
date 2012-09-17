@@ -2,14 +2,20 @@ import pygame, sys
 
 from pygame.locals import *
 from pygame.sprite import Sprite
-class ShipSprite(Sprite):
-    def __init__(self, color, initial_position):
+
+class ShipSprite():#Sprite):
+    def __init__(self):#, color, initial_position):
         #superclass constructor
-        Sprite.__init__(self)
+        #Sprite.__init__(self)
+
         
         #sprite's own canvas
         self.canvas = pygame.Surface([187,56])
         self.canvas.fill((128,128,255))
+
+        self.shipImage = pygame.image.load('assets/images/rocket.png').convert()
+        #self.shipImage.set_colorkey((self.shipImage.get_at([0,0])))
+
 class GameCanvas:
     """Renders the game window"""   
     
@@ -26,13 +32,19 @@ class GameCanvas:
         self.SCREENY = 1000
         self.DISPLAYSURF = pygame.display.set_mode( (self.SCREENX+10, self.SCREENY+10), 0, 32)
         pygame.display.set_caption('Arr!')
-        
+
+        #load image assets
+        self.nebulaBackground = pygame.image.load('assets/images/nebula.jpg').convert()
+        self.shipSprite = ShipSprite()
+
         #mouse
         pygame.mouse.set_visible(False)
 
 
     def renderBoard(self,board):
-        self.DISPLAYSURF.fill(self.BLACK)
+        #self.DISPLAYSURF.fill(self.BLACK)
+        self.DISPLAYSURF.blit(self.nebulaBackground, [0, 0])
+        
         #draw the border
         pygame.draw.line(self.DISPLAYSURF, self.WHITE, (0,0), (0,self.SCREENY), 2)
         pygame.draw.line(self.DISPLAYSURF, self.WHITE, (0,self.SCREENY), (self.SCREENX,self.SCREENY), 2)
@@ -52,6 +64,11 @@ class GameCanvas:
 
     def renderShip(self,ship):
         #rects are (x,y,width,height)
-        shipRect = (ship.xpos-25,  ship.ypos-12.5, 50, 25)
+        
         # jut draw an ellipse for the ship right now
-        pygame.draw.ellipse(self.DISPLAYSURF, self.RED, shipRect, 0)
+        #shipRect = (ship.xpos-25,  ship.ypos-12.5, 50, 25)
+        #pygame.draw.ellipse(self.DISPLAYSURF, self.RED, shipRect, 0)
+        #draw the rotated ship
+        rotated_surface = pygame.transform.rotate(self.shipSprite.shipImage, -1 * ship.vector[1])
+        print rotated_surface.get_size()
+        self.DISPLAYSURF.blit(rotated_surface, [ship.xpos-93.5, ship.ypos-28])
