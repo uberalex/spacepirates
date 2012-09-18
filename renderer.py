@@ -13,8 +13,8 @@ class ShipSprite():#Sprite):
         self.canvas = pygame.Surface([187,56])
         self.canvas.fill((128,128,255))
 
-        self.shipImage = pygame.image.load('assets/images/rocket.png').convert()
-        #self.shipImage.set_colorkey((self.shipImage.get_at([0,0])))
+        self.shipImage = pygame.image.load('assets/images/rocket2.png').convert()
+        self.shipImage.set_colorkey((self.shipImage.get_at([0,0])))
 
 class GameCanvas:
     """Renders the game window"""   
@@ -30,11 +30,11 @@ class GameCanvas:
         #screen geometry
         self.SCREENX = 1000
         self.SCREENY = 1000
-        self.DISPLAYSURF = pygame.display.set_mode( (self.SCREENX+10, self.SCREENY+10), 0, 32)
+        self.DISPLAYSURF = pygame.display.set_mode( (self.SCREENX, self.SCREENY), 0, 32)
         pygame.display.set_caption('Arr!')
 
         #load image assets
-        self.nebulaBackground = pygame.image.load('assets/images/nebula.jpg').convert()
+        self.nebulaBackground = pygame.image.load('assets/images/nebula2.jpg').convert()
         self.shipSprite = ShipSprite()
 
         #mouse
@@ -70,5 +70,5 @@ class GameCanvas:
         #pygame.draw.ellipse(self.DISPLAYSURF, self.RED, shipRect, 0)
         #draw the rotated ship
         rotated_surface = pygame.transform.rotate(self.shipSprite.shipImage, -1 * ship.vector[1])
-        print rotated_surface.get_size()
-        self.DISPLAYSURF.blit(rotated_surface, [ship.xpos-93.5, ship.ypos-28])
+        
+        self.DISPLAYSURF.blit(rotated_surface, [ship.xpos-(rotated_surface.get_width()/2), ship.ypos-(rotated_surface.get_height()/2)])
