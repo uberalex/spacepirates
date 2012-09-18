@@ -13,7 +13,7 @@ class ShipSprite():#Sprite):
         self.canvas = pygame.Surface([187,56])
         self.canvas.fill((128,128,255))
 
-        self.shipImage = pygame.image.load('assets/images/rocket2.png').convert()
+        self.shipImage = pygame.image.load('assets/images/rocket.png').convert()
         self.shipImage.set_colorkey((self.shipImage.get_at([0,0])))
 
 class GameCanvas:
